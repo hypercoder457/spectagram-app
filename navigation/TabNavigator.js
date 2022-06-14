@@ -32,8 +32,8 @@ const BottomTabNavigator = () => {
                     );
                 }
             })}
-            activeColor={"#ee8249"}
-            inactiveColor={"gray"}
+            activeColor="#ee8249"
+            inactiveColor="gray"
         >
             <Tab.Screen name="Feed" component={Feed} />
             <Tab.Screen name="Create Post" component={CreatePost} />
