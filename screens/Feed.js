@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
     View,
     Text,
@@ -16,7 +16,7 @@ import firebase from "firebase";
 
 let posts = require("./temp_posts.json");
 
-export default class Feed extends Component {
+export default class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
