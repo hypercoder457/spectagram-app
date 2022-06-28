@@ -13,7 +13,7 @@ export default class Profile extends React.Component {
     constructor() {
         super();
         this.state = {
-            userTheme: null,
+            lightTheme: true,
             user: firebase.auth().currentUser
         }
     }
@@ -23,14 +23,15 @@ export default class Profile extends React.Component {
     }
 
     toggleTheme = () => {
-        const usersRef = firebase.database().ref(`/users/${this.state.user.uid}/`);
-        if (this.state.userTheme === "dark") {
+        const uid = this.state.user.uid;
+        const usersRef = firebase.database().ref(`/users/${uid}/`);
+        if (this.state.lightTheme) {
             usersRef.set({
-                current_theme: "light"
+                current_theme: "dark"
             })
         } else {
             usersRef.set({
-                current_theme: "dark"
+                current_theme: "light"
             })
         }
     }
@@ -38,9 +39,10 @@ export default class Profile extends React.Component {
     getUserTheme = () => {
         const uid = this.state.user.uid;
         const userThemeRef = firebase.database().ref(`/users/${uid}/current_theme`);
-        userThemeRef.on("value", (data) => {
+        userThemeRef.on("value", data => {
+            let theme = data.val();
             this.setState({
-                userTheme: data.val()
+                lightTheme: theme === "light"
             })
         })
     }
@@ -48,40 +50,40 @@ export default class Profile extends React.Component {
     render() {
         return (
             <View style={
-                this.state.userTheme === "dark" ? styles.profileContainer : styles.profileContainerLight
+                this.state.lightTheme ? styles.profileContainerLight : styles.profileContainer
             }
             >
                 <Image
-                    source={this.state.user.photoURL}
+                    source={{ uri: this.state.user.photoURL }}
                     style={styles.userPhoto}
                 >
                 </Image>
                 <Text style={
-                    this.state.userTheme === "dark" ? styles.userInfo : styles.userInfoLight
+                    this.state.lightTheme ? styles.userInfoLight : styles.userInfo
                 }
                 >
                     {this.state.user.displayName}
                 </Text>
 
                 <Text style={
-                    this.state.userTheme === "dark" ? styles.userInfo : styles.userInfoLight
+                    this.state.lightTheme ? styles.userInfoLight : styles.userInfo
                 }
                 >
                     Email: {this.state.user.email}
                 </Text>
 
                 <Text style={
-                    this.state.userTheme === "dark" ? styles.userInfo : styles.userInfoLight
+                    this.state.lightTheme ? styles.userInfoLight : styles.userInfo
                 }
                 >
-                    Your current theme is set to: {this.state.userTheme}
+                    Your current theme is set to: {this.state.lightTheme ? "light" : "dark"}
                 </Text>
                 <TouchableOpacity
                     style={styles.themeToggleButton}
                     onPress={() => this.toggleTheme()}
                 >
                     <Text style={
-                        this.state.userTheme === "dark" ? null : styles.toggleTextLight
+                        this.state.lightTheme ? styles.toggleTextLight : null
                     }
                     >
                         Toggle theme

@@ -40,7 +40,11 @@ export default class PostCard extends React.Component {
                     </View>
                     <View style={styles.actionContainer}>
                         <View style={styles.likeButton}>
-                            <Ionicons name="heart" size={RFValue(30)} color="white" />
+                            <Ionicons 
+                                name="heart" 
+                                size={RFValue(30)} 
+                                color="white" 
+                            />
                             <Text style={styles.likeText}>12k</Text>
                         </View>
                     </View>

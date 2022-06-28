@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import * as Google from 'expo-auth-session/providers/google';
+import { useIdTokenAuthRequest } from 'expo-auth-session/providers/google';
 import {
-  StyleSheet, 
-  View, 
-  TouchableOpacity, 
-  Text, 
-  Image 
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  Image
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import firebase from "firebase";
@@ -14,7 +14,7 @@ export default function LoginScreen() {
   // Here, the "request" variable is the request sent to the Google API,
   // the "response" variable is the response that is gotten from the API after successful sign-in,
   // and the "promptAsync" FUNCTION is the method that opens up the popup window for sign-in.
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
+  const [request, response, promptAsync] = useIdTokenAuthRequest(
     {
       webClientId: '811051214713-128nbv0v1tq7496882v7iu7hticmo020.apps.googleusercontent.com',
     },
@@ -33,13 +33,8 @@ export default function LoginScreen() {
           if (result.additionalUserInfo.isNewUser) {
             firebase
               .database()
-              .ref("/users/" + result.user.uid)
+              .ref(`/users/${result.user.uid}`)
               .set({
-                gmail: result.user.email,
-                profile_picture: result.additionalUserInfo.profile.picture,
-                locale: result.additionalUserInfo.profile.locale,
-                first_name: result.additionalUserInfo.profile.given_name,
-                last_name: result.additionalUserInfo.profile.family_name,
                 current_theme: "dark"
               })
           }
