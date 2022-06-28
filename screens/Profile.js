@@ -13,8 +13,7 @@ export default class Profile extends React.Component {
     constructor() {
         super();
         this.state = {
-            lightTheme: true,
-            user: firebase.auth().currentUser
+            lightTheme: true
         }
     }
 
@@ -22,8 +21,12 @@ export default class Profile extends React.Component {
         this.getUserTheme();
     }
 
+    getUser = () => {
+        return firebase.auth().currentUser;
+    }
+
     toggleTheme = () => {
-        const uid = this.state.user.uid;
+        const uid = this.getUser().uid;
         const usersRef = firebase.database().ref(`/users/${uid}/`);
         if (this.state.lightTheme) {
             usersRef.set({
@@ -37,7 +40,7 @@ export default class Profile extends React.Component {
     }
 
     getUserTheme = () => {
-        const uid = this.state.user.uid;
+        const uid = this.getUser().uid;
         const userThemeRef = firebase.database().ref(`/users/${uid}/current_theme`);
         userThemeRef.on("value", data => {
             let theme = data.val();
@@ -54,7 +57,7 @@ export default class Profile extends React.Component {
             }
             >
                 <Image
-                    source={{ uri: this.state.user.photoURL }}
+                    source={{ uri: this.getUser().photoURL }}
                     style={styles.userPhoto}
                 >
                 </Image>
@@ -62,14 +65,14 @@ export default class Profile extends React.Component {
                     this.state.lightTheme ? styles.userInfoLight : styles.userInfo
                 }
                 >
-                    {this.state.user.displayName}
+                    {this.getUser().displayName}
                 </Text>
 
                 <Text style={
                     this.state.lightTheme ? styles.userInfoLight : styles.userInfo
                 }
                 >
-                    Email: {this.state.user.email}
+                    Email: {this.getUser().email}
                 </Text>
 
                 <Text style={
