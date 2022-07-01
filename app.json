@@ -26,7 +26,6 @@
       },
       "package": "com.whitehatcoder.spectagram_app"
     },
-    "scheme": "com.whitehatcoder.spectagram_app",
     "web": {
       "favicon": "./assets/favicon.png"
     },
