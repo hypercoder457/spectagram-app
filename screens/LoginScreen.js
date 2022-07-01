@@ -17,6 +17,8 @@ export default function LoginScreen() {
   const [request, response, promptAsync] = useIdTokenAuthRequest(
     {
       webClientId: '811051214713-128nbv0v1tq7496882v7iu7hticmo020.apps.googleusercontent.com',
+      expoClientId: '811051214713-cgi0lojn91c1mrv995don909j69vb30i.apps.googleusercontent.com',
+      androidClientId: '811051214713-rimvkn3k00fj6ssddcf669h20npgdv8b.apps.googleusercontent.com'
     },
   );
 
