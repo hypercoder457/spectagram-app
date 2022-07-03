@@ -8,7 +8,9 @@ import {
     StatusBar,
     Image,
     ScrollView,
-    TextInput
+    TextInput,
+    Button,
+    Alert
 } from "react-native";
 
 import { RFValue } from "react-native-responsive-fontsize";
@@ -22,7 +24,8 @@ export default class CreatePost extends React.Component {
         this.state = {
             previewImage: "image_1",
             dropdownHeight: 40,
-            lightTheme: true
+            lightTheme: true,
+            caption: null
         };
     }
 
@@ -38,6 +41,39 @@ export default class CreatePost extends React.Component {
             theme = data.val();
             this.setState({ lightTheme: theme === "light" });
         })
+    }
+
+    async addPost() {
+        const postData = {
+            preview_image: this.state.previewImage,
+            caption: this.state.caption,
+            author: firebase.auth().currentUser.displayName,
+            created_on: new Date(),
+            author_uid: firebase.auth().currentUser.uid,
+            likes: 0,
+        }
+        if (this.state.caption) {
+            const randomUid = Math
+                .random()
+                .toString(36)
+                .slice(2);
+            await firebase
+                .database()
+                .ref(`/posts/${randomUid}`)
+                .set(postData)
+            this.props.navigation.navigate('Feed');
+        } else {
+            if (Platform.OS === 'ios' || Platform.OS === 'android') {
+                Alert.alert(
+                    'Error',
+                    'All fields are required!',
+                    [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+                    { cancelable: false }
+                );
+            } else {
+                alert('Error! All fields are required!');
+            }
+        }
     }
 
     render() {
@@ -120,10 +156,18 @@ export default class CreatePost extends React.Component {
                                 styles.inputFont,
                                 { marginTop: 20 }
                             ]}
-                            onChangeText={caption => this.setState({ caption })}
+                            onChangeText={caption => this.setState({ caption: caption })}
                             placeholder="Caption"
                             placeholderTextColor={this.state.lightTheme ? "black" : "white"}
                         />
+
+                        <View style={styles.submitButton}>
+                            <Button
+                                title="Submit"
+                                color="orange"
+                                onPress={() => this.addPost()}
+                            />
+                        </View>
                     </ScrollView>
                 </View>
                 <View style={{ flex: 0.08 }} />

@@ -7,36 +7,61 @@ import {
     Platform,
     StatusBar,
     Image,
-    FlatList
+    FlatList,
+    Alert
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import PostCard from "./PostCard";
 
 import firebase from "firebase";
 
-let posts = require("./temp_posts.json");
-
 export default class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lightTheme: true
+            lightTheme: true,
+            posts: []
         }
     }
 
     getUserTheme = () => {
         let theme;
         firebase
-          .database()
-          .ref(`/users/${firebase.auth().currentUser.uid}/current_theme`)
-          .on("value", data => {
-            theme = data.val();
-            this.setState({ lightTheme: theme === "light" });
-          });
-      };
+            .database()
+            .ref(`/users/${firebase.auth().currentUser.uid}/current_theme`)
+            .on("value", data => {
+                theme = data.val();
+                this.setState({ lightTheme: theme === "light" });
+            });
+    };
+
+    fetchPosts = () => {
+        var postsRef = firebase.database().ref(`/posts/`);
+        postsRef.on('value', (data) => {
+            let posts = [];
+            if (data.val()) {
+                Object.keys(data.val()).forEach(function (key) {
+                    posts.push({ key: key, value: data.val()[key] });
+                });
+                this.setState({ posts: posts });
+            } else {
+                if (Platform.OS === 'android' ||
+                    Platform.OS === 'ios') {
+                    Alert.alert(
+                        'Error',
+                        'Loading the posts failed. Please try again...',
+                        [{ text: 'OK' }]
+                    );
+                } else {
+                    alert('Loading the posts failed. Please try again...');
+                }
+            }
+        });
+    };
 
     componentDidMount() {
         this.getUserTheme();
+        this.fetchPosts();
     }
 
     renderItem = ({ item: post }) => {
@@ -70,7 +95,7 @@ export default class Feed extends React.Component {
                 <View style={styles.cardContainer}>
                     <FlatList
                         keyExtractor={this.keyExtractor}
-                        data={posts}
+                        data={this.state.posts}
                         renderItem={this.renderItem}
                     />
                 </View>

@@ -10,7 +10,17 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { RFValue } from "react-native-responsive-fontsize";
 
 export default class PostCard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            postId: this.props.post.key,
+            postData: this.props.post.value
+        }
+        console.log(this.props.post);
+    }
+
     render() {
+        const post = this.props.post['value'];
         return (
             <TouchableOpacity
                 style={styles.container}
@@ -29,21 +39,21 @@ export default class PostCard extends React.Component {
                             ></Image>
                         </View>
                         <View style={styles.authorNameContainer}>
-                            <Text style={styles.authorNameText}>{this.props.post.author}</Text>
+                            <Text style={styles.authorNameText}>{post.author}</Text>
                         </View>
                     </View>
                     <Image source={require("../assets/post.jpeg")} style={styles.postImage} />
-                    <View style={styles.captionContainer}>
+                    <View>
                         <Text style={styles.captionText}>
-                            {this.props.post.caption}
+                            {post.caption}
                         </Text>
                     </View>
                     <View style={styles.actionContainer}>
                         <View style={styles.likeButton}>
-                            <Ionicons 
-                                name="heart" 
-                                size={RFValue(30)} 
-                                color="white" 
+                            <Ionicons
+                                name="heart"
+                                size={RFValue(30)}
+                                color="white"
                             />
                             <Text style={styles.likeText}>12k</Text>
                         </View>

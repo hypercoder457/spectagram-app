@@ -54,7 +54,7 @@ export default class PostScreen extends React.Component {
   }
 
   render() {
-    const post = this.props.route.params.post;
+    const post = this.props.route.params.post['value'];
 
     if (!this.props.route.params) {
       this.props.navigation.navigate("Home")
