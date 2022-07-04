@@ -16,7 +16,6 @@ export default class PostCard extends React.Component {
             postId: this.props.post.key,
             postData: this.props.post.value
         }
-        console.log(this.props.post);
     }
 
     render() {
