@@ -13,13 +13,21 @@ export default class PostCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            postId: this.props.post.key,
             postData: this.props.post.value
         }
     }
 
     render() {
-        const post = this.props.post['value'];
+        const post = this.state.postData;
+        let preview_images = {
+            image_1: require("../assets/image_1.jpg"),
+            image_2: require("../assets/image_2.jpg"),
+            image_3: require("../assets/image_3.jpg"),
+            image_4: require("../assets/image_4.jpg"),
+            image_5: require("../assets/image_5.jpg"),
+            image_6: require("../assets/image_6.jpg"),
+            image_7: require("../assets/image_7.jpg")
+        };
         return (
             <TouchableOpacity
                 style={styles.container}
@@ -41,7 +49,7 @@ export default class PostCard extends React.Component {
                             <Text style={styles.authorNameText}>{post.author}</Text>
                         </View>
                     </View>
-                    <Image source={require("../assets/post.jpeg")} style={styles.postImage} />
+                    <Image source={preview_images[post.preview_image]} style={styles.postImage} />
                     <View>
                         <Text style={styles.captionText}>
                             {post.caption}

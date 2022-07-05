@@ -9,36 +9,62 @@ import CreatePost from "../screens/CreatePost";
 
 const Tab = createMaterialBottomTabNavigator();
 
-const BottomTabNavigator = () => {
-    return (
-        <Tab.Navigator
-            labeled={false}
-            barStyle={styles.bottomTabStyle}
-            screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                    let iconName;
-                    if (route.name === "Feed") {
-                        iconName = focused ? "home" : "home-outline";
-                    } else if (route.name === "Create Post") {
-                        iconName = focused ? "add-circle" : "add-circle-outline";
+export default class BottomTabNavigator extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isUpdated: true,
+            lightTheme: true
+        }
+    }
+
+    renderFeed = props => {
+        return <Feed setUpdateToFalse={this.removeUpdated} {...props} />
+    }
+
+    renderCreatePost = props => {
+        return <CreatePost setUpdateToTrue={this.changeUpdated} {...props} />
+    }
+
+    changeUpdated = () => {
+        this.setState({ isUpdated: true });
+    };
+
+    removeUpdated = () => {
+        this.setState({ isUpdated: false });
+    };
+    
+    render() {
+        return (
+            <Tab.Navigator
+                labeled={false}
+                barStyle={styles.bottomTabStyle}
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
+                        if (route.name === "Feed") {
+                            iconName = focused ? "home" : "home-outline";
+                        } else if (route.name === "Create Post") {
+                            iconName = focused ? "add-circle" : "add-circle-outline";
+                        }
+                        return (
+                            <Ionicons
+                                name={iconName}
+                                size={RFValue(25)}
+                                color={color}
+                                style={styles.icons}
+                            />
+                        );
                     }
-                    return (
-                        <Ionicons
-                            name={iconName}
-                            size={RFValue(25)}
-                            color={color}
-                            style={styles.icons}
-                        />
-                    );
-                }
-            })}
-            activeColor="#ee8249"
-            inactiveColor="gray"
-        >
-            <Tab.Screen name="Feed" component={Feed} />
-            <Tab.Screen name="Create Post" component={CreatePost} />
-        </Tab.Navigator>
-    );
+                })}
+                activeColor="#ee8249"
+                inactiveColor="gray"
+            >
+                <Tab.Screen name="Feed" component={this.renderFeed} />
+                <Tab.Screen name="Create Post" component={this.renderCreatePost} />
+            </Tab.Navigator>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -55,5 +81,3 @@ const styles = StyleSheet.create({
         height: RFValue(30)
     }
 });
-
-export default BottomTabNavigator;

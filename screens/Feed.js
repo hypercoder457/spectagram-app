@@ -44,8 +44,10 @@ export default class Feed extends React.Component {
                     posts.push({ key: key, value: data.val()[key] });
                 });
                 this.setState({ posts: posts });
-            } else {
-                if (Platform.OS === 'android' ||
+            }
+        },
+        function(error) {
+            if (Platform.OS === 'android' ||
                     Platform.OS === 'ios') {
                     Alert.alert(
                         'Error',
@@ -55,8 +57,8 @@ export default class Feed extends React.Component {
                 } else {
                     alert('Loading the posts failed. Please try again...');
                 }
-            }
-        });
+        }
+        );
     };
 
     componentDidMount() {
@@ -92,6 +94,17 @@ export default class Feed extends React.Component {
                         </Text>
                     </View>
                 </View>
+                {!this.state.posts[0] ? (
+                <View style={styles.noStories}>
+                    <Text
+                        style={
+                            this.state.lightTheme
+                                ? styles.noStoriesTextLight
+                                : styles.noStoriesText
+                        }
+                    >No stories available</Text>
+                </View>
+                ) : (
                 <View style={styles.cardContainer}>
                     <FlatList
                         keyExtractor={this.keyExtractor}
@@ -99,6 +112,8 @@ export default class Feed extends React.Component {
                         renderItem={this.renderItem}
                     />
                 </View>
+                )}
+
             </View>
         );
     }
@@ -145,5 +160,19 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         flex: 0.85
+    },
+    noStories: {
+        flex: 0.85,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    noStoriesTextLight: {
+        fontSize: RFValue(40),
+        fontFamily: "Bubblegum-Sans"
+    },
+    noStoriesText: {
+        color: "white",
+        fontSize: RFValue(40),
+        fontFamily: "Bubblegum-Sans"
     }
 });

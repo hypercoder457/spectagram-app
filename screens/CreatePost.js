@@ -238,5 +238,10 @@ const styles = StyleSheet.create({
         borderRadius: RFValue(10),
         paddingLeft: RFValue(10),
         color: "white"
+    },
+    submitButton: {
+        marginTop: RFValue(20),
+        alignItems: "center",
+        justifyContent: "center"
     }
 });

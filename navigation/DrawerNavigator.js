@@ -16,10 +16,10 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator 
+    <Drawer.Navigator
       drawerContent={props => <AppDrawerContent {...props} />}>
-      <Drawer.Screen name="Home" component={StackNavigator} />
-      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Home" component={StackNavigator} options={{ unmountOnBlur: true }} />
+      <Drawer.Screen name="Profile" component={Profile} options={{ unmountOnBlur: true }} />
     </Drawer.Navigator>
   );
 };
@@ -27,10 +27,8 @@ const DrawerNavigator = () => {
 function AppDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
-      {/*all of the drawer items*/}
       <DrawerItemList {...props} />
       <View>
-        {/* here's where you put your logout drawer item*/}
         <DrawerItem
           label="Log out"
           onPress={() => firebase.auth().signOut()}
