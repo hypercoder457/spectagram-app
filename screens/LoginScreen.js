@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useIdTokenAuthRequest } from 'expo-auth-session/providers/google';
 import {
   StyleSheet,
   View,
@@ -10,16 +9,26 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import firebase from "firebase";
 
+import * as AuthSession from "expo-auth-session";
+import * as Google from 'expo-auth-session/providers/google';
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  CedarvilleCursive_400Regular as CedarvilleCursive
+} from "@expo-google-fonts/cedarville-cursive";
+
 export default function LoginScreen() {
+  let [fontsLoaded] = useFonts({ CedarvilleCursive });
+
   // Here, the "request" variable is the request sent to the Google API,
   // the "response" variable is the response that is gotten from the API after successful sign-in,
   // and the "promptAsync" FUNCTION is the method that opens up the popup window for sign-in.
-  const [request, response, promptAsync] = useIdTokenAuthRequest(
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
       webClientId: '811051214713-128nbv0v1tq7496882v7iu7hticmo020.apps.googleusercontent.com',
       expoClientId: '811051214713-cgi0lojn91c1mrv995don909j69vb30i.apps.googleusercontent.com',
       androidClientId: '811051214713-rimvkn3k00fj6ssddcf669h20npgdv8b.apps.googleusercontent.com'
-    },
+    }
   );
 
   useEffect(() => {
@@ -45,6 +54,10 @@ export default function LoginScreen() {
   }, [response])
 
 
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.appTitle}>
@@ -60,7 +73,11 @@ export default function LoginScreen() {
       </View>
       <TouchableOpacity
         disabled={!request}
-        onPress={() => promptAsync()}
+        onPress={() => promptAsync({
+          redirectUri: AuthSession.makeRedirectUri({
+            native: 'com.whitehatcoder.spectagramapp:/oauthredirect'
+          })
+        })}
         style={styles.signInButton}
       >
         <Image
@@ -120,7 +137,7 @@ const styles = StyleSheet.create({
   appTitleText: {
     color: "white",
     fontSize: RFValue(20),
-    fontFamily: "cursive",
+    fontFamily: "CedarvilleCursive",
     fontStyle: "italic"
   }
 });

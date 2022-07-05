@@ -24,11 +24,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.whitehatcoder.spectagram_app"
+      "package": "com.whitehatcoder.spectagramapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "scheme": "com.whitehatcoder.spectagramapp",
     "description": "",
     "githubUrl": "https://github.com/hypercoder457/spectagram-app"
   }

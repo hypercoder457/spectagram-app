@@ -5,9 +5,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "build": "eas build -p android --profile test"
   },
   "dependencies": {
+    "@expo-google-fonts/cedarville-cursive": "^0.2.2",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/drawer": "^6.3.1",
@@ -15,6 +17,7 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/stack": "*",
     "expo": "~44.0.0",
+    "expo-app-loading": "~1.3.0",
     "expo-application": "~4.0.1",
     "expo-auth-session": "~3.5.0",
     "expo-random": "~12.1.1",
