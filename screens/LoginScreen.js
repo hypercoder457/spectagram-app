@@ -4,14 +4,17 @@ import {
   View,
   TouchableOpacity,
   Text,
-  Image
+  Image,
+  Platform
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import firebase from "firebase";
 
 import * as AuthSession from "expo-auth-session";
-import * as Google from 'expo-auth-session/providers/google';
+import * as Google from "expo-auth-session/providers/google";
+import * as WebBrowser from "expo-web-browser";
 import AppLoading from "expo-app-loading";
+
 import {
   useFonts,
   CedarvilleCursive_400Regular as CedarvilleCursive
@@ -19,6 +22,13 @@ import {
 
 export default function LoginScreen() {
   let [fontsLoaded] = useFonts({ CedarvilleCursive });
+
+  if(Platform.OS === "android") {
+    useEffect(() => {
+      WebBrowser.warmUpAsync(); // The browser is slow while testing, so "warm it up" in the background to avoid slowness!
+      return () => WebBrowser.coolDownAsync(); // after the browser is initialized in the background, stop it using coolDownAsync function
+    })
+  }
 
   // Here, the "request" variable is the request sent to the Google API,
   // the "response" variable is the response that is gotten from the API after successful sign-in,
