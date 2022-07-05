@@ -23,7 +23,7 @@ import {
 export default function LoginScreen() {
   let [fontsLoaded] = useFonts({ CedarvilleCursive });
 
-  if(Platform.OS === "android") {
+  if (Platform.OS === "android") {
     useEffect(() => {
       WebBrowser.warmUpAsync(); // The browser is slow while testing, so "warm it up" in the background to avoid slowness!
       return () => WebBrowser.coolDownAsync(); // after the browser is initialized in the background, stop it using coolDownAsync function
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: RFValue(30),
     backgroundColor: "red",
-    marginTop: 10
+    marginBottom:  (Platform.OS === "android" || Platform.OS === "ios") ? RFValue(60) : null
   },
   signInText: {
     color: "white",
@@ -127,9 +127,10 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   },
   iconImage: {
-    width: "400%",
+    width: (Platform.OS === "android" || Platform.OS === "ios") ? "100%" : "250%",
     height: "400%",
-    resizeMode: "contain"
+    resizeMode: "contain",
+    marginTop: (Platform.OS === "android" || Platform.OS === "ios") ? RFValue(120) : RFValue(20)
   },
   appTitle: {
     justifyContent: "center",
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
   },
   appTitleText: {
     color: "white",
-    fontSize: RFValue(20),
+    fontSize: (Platform.OS === "android" || Platform.OS === "ios") ? RFValue(40) : RFValue(20),
     fontFamily: "CedarvilleCursive",
     fontStyle: "italic"
   }
