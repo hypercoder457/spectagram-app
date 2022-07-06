@@ -20,8 +20,11 @@ import {
   CedarvilleCursive_400Regular as CedarvilleCursive
 } from "@expo-google-fonts/cedarville-cursive";
 
+import Constants from "expo-constants";
+
 export default function LoginScreen() {
   let [fontsLoaded] = useFonts({ CedarvilleCursive });
+  let extraAppValues = Constants.manifest.extra;
 
   if (Platform.OS === "android") {
     useEffect(() => {
@@ -35,9 +38,9 @@ export default function LoginScreen() {
   // and the "promptAsync" FUNCTION is the method that opens up the popup window for sign-in.
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
-      webClientId: '811051214713-128nbv0v1tq7496882v7iu7hticmo020.apps.googleusercontent.com',
-      expoClientId: '811051214713-cgi0lojn91c1mrv995don909j69vb30i.apps.googleusercontent.com',
-      androidClientId: '811051214713-rimvkn3k00fj6ssddcf669h20npgdv8b.apps.googleusercontent.com'
+      webClientId: extraAppValues.webClientId,
+      expoClientId: extraAppValues.expoClientId,
+      androidClientId: extraAppValues.androidClientId
     }
   );
 
