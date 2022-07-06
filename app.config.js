@@ -1,4 +1,9 @@
-import('dotenv/config');
+import { Platform } from 'react-native';
+
+if (__DEV__ || Platform.OS === "android") {
+    import('dotenv/config');
+}
+
 
 export default {
     extra: {
