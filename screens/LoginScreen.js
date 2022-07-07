@@ -40,7 +40,7 @@ export default function LoginScreen() {
     {
       webClientId: extraAppValues.webClientId,
       expoClientId: extraAppValues.expoClientId,
-      androidClientId: extraAppValues.androidClientId
+      androidClientId: '811051214713-rimvkn3k00fj6ssddcf669h20npgdv8b.apps.googleusercontent.com'
     }
   );
 
