@@ -8,7 +8,7 @@ import DashboardScreen from "./screens/DashboardScreen";
 
 import { firebaseConfig } from './config';
 
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 if (! firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

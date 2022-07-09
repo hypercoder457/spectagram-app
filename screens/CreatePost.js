@@ -16,7 +16,9 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import DropDownPicker from "react-native-dropdown-picker";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 export default class CreatePost extends React.Component {
     constructor(props) {

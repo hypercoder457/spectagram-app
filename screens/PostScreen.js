@@ -13,7 +13,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { RFValue } from "react-native-responsive-fontsize";
 import * as Speech from "expo-speech";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/database";
 
 export default class PostScreen extends React.Component {
   constructor(props) {

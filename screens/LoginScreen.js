@@ -8,7 +8,9 @@ import {
   Platform
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 import * as AuthSession from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";

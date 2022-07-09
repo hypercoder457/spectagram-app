@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
     Text,
     View,
@@ -6,8 +6,10 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import firebase from 'firebase';
-import { RFValue } from 'react-native-responsive-fontsize';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export default class Profile extends React.Component {
     constructor() {

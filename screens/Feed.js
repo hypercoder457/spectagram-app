@@ -13,7 +13,9 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import PostCard from "./PostCard";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/auth";
 
 export default class Feed extends React.Component {
     constructor(props) {
