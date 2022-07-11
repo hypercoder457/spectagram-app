@@ -1,41 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem
-} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import StackNavigator from './StackNavigator';
 import Profile from '../screens/Profile';
-
-import firebase from 'firebase';
+import Logout from "../screens/Logout";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator
-      drawerContent={props => <AppDrawerContent {...props} />}>
+    <Drawer.Navigator>
       <Drawer.Screen name="Home" component={StackNavigator} options={{ unmountOnBlur: true }} />
       <Drawer.Screen name="Profile" component={Profile} options={{ unmountOnBlur: true }} />
+      <Drawer.Screen name="Logout" component={Logout} options={{ unmountOnBlur: true }} />
     </Drawer.Navigator>
   );
 };
-
-function AppDrawerContent(props) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <View>
-        <DrawerItem
-          label="Log out"
-          onPress={() => firebase.auth().signOut()}
-        />
-      </View>
-    </DrawerContentScrollView>
-  );
-}
 
 export default DrawerNavigator;

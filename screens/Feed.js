@@ -73,12 +73,13 @@ export default class Feed extends React.Component {
 
     async loadFonts() {
         await Font.loadAsync(fontsToLoad);
-        this.setState({ fontsLoaded: true })
+        this.setState({ fontsLoaded: true });
     }
 
     componentDidMount() {
         this.getUserTheme();
         this.fetchPosts();
+        this.loadFonts();
     }
 
     renderItem = ({ item: post }) => {
@@ -88,6 +89,10 @@ export default class Feed extends React.Component {
     keyExtractor = (item, index) => index.toString();
 
     render() {
+        if (!this.state.fontsLoaded) {
+            return <AppLoading />;
+        }
+
         return (
             <View style={
                 this.state.lightTheme ? styles.containerLight : styles.container
@@ -185,11 +190,11 @@ const styles = StyleSheet.create({
     },
     noStoriesTextLight: {
         fontSize: RFValue(40),
-        fontFamily:  "CedarvilleCursive"
+        fontFamily: "CedarvilleCursive"
     },
     noStoriesText: {
         color: "white",
         fontSize: RFValue(40),
-        fontFamily:  "CedarvilleCursive"
+        fontFamily: "CedarvilleCursive"
     }
 });

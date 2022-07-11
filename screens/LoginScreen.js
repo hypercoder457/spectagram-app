@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
   },
   signInText: {
     color: "white",
-    fontSize: RFValue(18)
+    fontSize: RFValue(18),
+    fontFamily: "CedarvilleCursive"
   },
   googleLogo: {
     width: RFValue(30),
