@@ -17,12 +17,20 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+
+let fontsToLoad = {
+    "CedarvilleCursive": require("../assets/fonts/CedarvilleCursive-Regular.ttf")
+}
+
 export default class Feed extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             lightTheme: true,
-            posts: []
+            posts: [],
+            fontsLoaded: false
         }
     }
 
@@ -48,20 +56,25 @@ export default class Feed extends React.Component {
                 this.setState({ posts: posts });
             }
         },
-        function(error) {
-            if (Platform.OS === 'android' ||
+            function (error) {
+                if (Platform.OS === 'android' ||
                     Platform.OS === 'ios') {
                     Alert.alert(
-                        'Error',
+                        `Error ${error.code}`,
                         'Loading the posts failed. Please try again...',
                         [{ text: 'OK' }]
                     );
                 } else {
                     alert('Loading the posts failed. Please try again...');
                 }
-        }
+            }
         );
     };
+
+    async loadFonts() {
+        await Font.loadAsync(fontsToLoad);
+        this.setState({ fontsLoaded: true })
+    }
 
     componentDidMount() {
         this.getUserTheme();
@@ -97,23 +110,23 @@ export default class Feed extends React.Component {
                     </View>
                 </View>
                 {!this.state.posts[0] ? (
-                <View style={styles.noStories}>
-                    <Text
-                        style={
-                            this.state.lightTheme
-                                ? styles.noStoriesTextLight
-                                : styles.noStoriesText
-                        }
-                    >No stories available</Text>
-                </View>
+                    <View style={styles.noStories}>
+                        <Text
+                            style={
+                                this.state.lightTheme
+                                    ? styles.noStoriesTextLight
+                                    : styles.noStoriesText
+                            }
+                        >No stories available</Text>
+                    </View>
                 ) : (
-                <View style={styles.cardContainer}>
-                    <FlatList
-                        keyExtractor={this.keyExtractor}
-                        data={this.state.posts}
-                        renderItem={this.renderItem}
-                    />
-                </View>
+                    <View style={styles.cardContainer}>
+                        <FlatList
+                            keyExtractor={this.keyExtractor}
+                            data={this.state.posts}
+                            renderItem={this.renderItem}
+                        />
+                    </View>
                 )}
 
             </View>
@@ -155,10 +168,12 @@ const styles = StyleSheet.create({
     appTitleText: {
         color: "white",
         fontSize: RFValue(28),
+        fontFamily: "CedarvilleCursive"
     },
     appTitleTextLight: {
         color: "black",
-        fontSize: RFValue(28)
+        fontSize: RFValue(28),
+        fontFamily: "CedarvilleCursive"
     },
     cardContainer: {
         flex: 0.85
@@ -170,11 +185,11 @@ const styles = StyleSheet.create({
     },
     noStoriesTextLight: {
         fontSize: RFValue(40),
-        fontFamily: "Bubblegum-Sans"
+        fontFamily:  "CedarvilleCursive"
     },
     noStoriesText: {
         color: "white",
         fontSize: RFValue(40),
-        fontFamily: "Bubblegum-Sans"
+        fontFamily:  "CedarvilleCursive"
     }
 });

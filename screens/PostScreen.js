@@ -12,9 +12,15 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RFValue } from "react-native-responsive-fontsize";
 import * as Speech from "expo-speech";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 
 import firebase from "firebase/app";
 import "firebase/database";
+
+const fontsToLoad = {
+  "CedarvilleCursive": require("../assets/fonts/CedarvilleCursive-Regular.ttf")
+};
 
 export default class PostScreen extends React.Component {
   constructor(props) {
@@ -22,12 +28,19 @@ export default class PostScreen extends React.Component {
     this.state = {
       speakerColor: "white",
       speakerIcon: "volume-high-outline",
-      lightTheme: true
+      lightTheme: true,
+      fontsLoaded: false
     }
+  }
+
+  async loadFonts() {
+    await Font.loadAsync(fontsToLoad);
+    this.setState({ fontsLoaded: true });
   }
 
   componentDidMount() {
     this.getUserTheme();
+    this.loadFonts();
   }
 
   getUserTheme = () => {
@@ -65,8 +78,9 @@ export default class PostScreen extends React.Component {
       image_6: require("../assets/image_6.jpg"),
       image_7: require("../assets/image_7.jpg")
     };
-
-    if (!this.props.route.params) {
+    if (!this.state.fontsLoaded) {
+      return <AppLoading />;
+    } else if (!this.props.route.params) {
       this.props.navigation.navigate("Home")
     } else {
       return (
@@ -122,7 +136,7 @@ export default class PostScreen extends React.Component {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Home")}>
+            onPress={() => this.props.navigation.goBack()}>
             <Text style={
               this.state.lightTheme ? styles.backButtonLight : styles.backButton
             }>Back to Home</Text>
@@ -170,12 +184,14 @@ const styles = StyleSheet.create({
   appTitleText: {
     color: "white",
     fontSize: RFValue(20),
-    marginTop: RFValue(30)
+    marginTop: RFValue(30),
+    fontFamily: "CedarvilleCursive"
   },
   appTitleTextLight: {
     color: "black",
     fontSize: RFValue(20),
-    marginTop: RFValue(30)
+    marginTop: RFValue(30),
+    fontFamily: "CedarvilleCursive"
   },
   speakerIcon: {
     margin: RFValue(15),
@@ -185,13 +201,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: RFValue(10),
     marginTop: RFValue(30),
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "CedarvilleCursive"
   },
   authorNameTextLight: {
     color: "black",
     fontSize: RFValue(10),
     marginTop: RFValue(30),
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "CedarvilleCursive"
   },
   postImage: {
     alignSelf: 'center',
@@ -203,20 +221,24 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "white",
     paddingTop: RFValue(10),
-    alignSelf: "center"
+    alignSelf: "center",
+    fontFamily: "CedarvilleCursive"
   },
   captionTextLight: {
     fontSize: 13,
     color: "black",
     paddingTop: RFValue(10),
-    alignSelf: "center"
+    alignSelf: "center",
+    fontFamily: "CedarvilleCursive"
   },
   backButton: {
     color: "white",
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "CedarvilleCursive"
   },
   backButtonLight: {
     color: "black",
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "CedarvilleCursive"
   }
 });

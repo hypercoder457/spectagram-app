@@ -11,16 +11,30 @@ import "firebase/auth";
 import "firebase/database";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+
+const fontsToLoad = {
+    "CedarvilleCursive": require("../assets/fonts/CedarvilleCursive-Regular.ttf")
+};
+
 export default class Profile extends React.Component {
     constructor() {
         super();
         this.state = {
-            lightTheme: true
+            lightTheme: true,
+            fontsLoaded: true
         }
     }
 
     componentDidMount() {
         this.getUserTheme();
+        this.loadFonts();
+    }
+
+    async loadFonts() {
+        await Font.loadAsync(fontsToLoad);
+        this.setState({ fontsLoaded: true });
     }
 
     getUser = () => {
@@ -53,6 +67,9 @@ export default class Profile extends React.Component {
     }
 
     render() {
+        if (!this.state.fontsLoaded) {
+            return <AppLoading />;
+        }
         return (
             <View style={
                 this.state.lightTheme ? styles.profileContainerLight : styles.profileContainer
@@ -120,10 +137,12 @@ const styles = StyleSheet.create({
     },
     userInfo: {
         fontSize: 20,
-        color: "white"
+        color: "white",
+        fontFamily: "CedarvilleCursive"
     },
     userInfoLight: {
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: "CedarvilleCursive"
     },
     themeToggleButton: {
         flexDirection: "row",
@@ -135,6 +154,7 @@ const styles = StyleSheet.create({
         width: RFValue(100)
     },
     toggleTextLight: {
-        color: "black"
+        color: "black",
+        fontFamily: "CedarvilleCursive"
     }
 })

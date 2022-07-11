@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     },
     authorNameText: {
         color: "white",
-        fontSize: RFValue(20)
+        fontSize: RFValue(20),
+        fontFamily: "CedarvilleCursive"
     },
     postImage: {
         marginTop: RFValue(20),
@@ -114,7 +115,8 @@ const styles = StyleSheet.create({
     captionText: {
         fontSize: 13,
         color: "white",
-        paddingTop: RFValue(10)
+        paddingTop: RFValue(10),
+        fontFamily: "CedarvilleCursive"
     },
     actionContainer: {
         justifyContent: "center",

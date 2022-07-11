@@ -9,8 +9,8 @@ import {
     Image,
     ScrollView,
     TextInput,
-    Button,
-    Alert
+    Alert,
+    TouchableOpacity
 } from "react-native";
 
 import { RFValue } from "react-native-responsive-fontsize";
@@ -20,6 +20,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+import { color } from "react-native-reanimated";
+
+let fontsToLoad = {
+    "CedarvilleCursive": require("../assets/fonts/CedarvilleCursive-Regular.ttf")
+}
+
 export default class CreatePost extends React.Component {
     constructor(props) {
         super(props);
@@ -27,12 +35,19 @@ export default class CreatePost extends React.Component {
             previewImage: "image_1",
             dropdownHeight: 40,
             lightTheme: true,
-            caption: null
+            caption: null,
+            fontsLoaded: false
         };
     }
 
     componentDidMount() {
         this.getUserTheme();
+        this.loadFonts();
+    }
+
+    async loadFonts() {
+        await Font.loadAsync(fontsToLoad);
+        this.setState({ fontsLoaded: true });
     }
 
     getUserTheme() {
@@ -69,7 +84,7 @@ export default class CreatePost extends React.Component {
                 Alert.alert(
                     'Error',
                     'All fields are required!',
-                    [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+                    [{ text: 'OK' }],
                     { cancelable: false }
                 );
             } else {
@@ -98,6 +113,10 @@ export default class CreatePost extends React.Component {
             { label: "Image 6", value: "image_6" },
             { label: "Image 7", value: "image_7" }
         ]
+
+        if (!this.state.fontsLoaded) {
+            return <AppLoading />;
+        }
 
         return (
             <View style={
@@ -140,7 +159,8 @@ export default class CreatePost extends React.Component {
                                 }}
                                 dropDownStyle={{ backgroundColor: this.state.lightTheme ? "white" : "black" }}
                                 labelStyle={{
-                                    color: this.state.lightTheme ? "black" : "white"
+                                    color: this.state.lightTheme ? "black" : "white",
+                                    fontFamily: "CedarvilleCursive"
                                 }}
                                 arrowStyle={{
                                     color: this.state.lightTheme ? "black" : "white"
@@ -163,13 +183,11 @@ export default class CreatePost extends React.Component {
                             placeholderTextColor={this.state.lightTheme ? "black" : "white"}
                         />
 
-                        <View style={styles.submitButton}>
-                            <Button
-                                title="Submit"
-                                color="orange"
-                                onPress={() => this.addPost()}
-                            />
-                        </View>
+                        <TouchableOpacity
+                            onPress={() => this.addPost()}
+                            style={styles.submitButton}>
+                            <Text style={{ color: "white", fontFamily: "CedarvilleCursive" }}>Submit</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
                 <View style={{ flex: 0.08 }} />
@@ -216,11 +234,13 @@ const styles = StyleSheet.create({
     },
     appTitleText: {
         color: "white",
-        fontSize: RFValue(28)
+        fontSize: RFValue(28),
+        fontFamily: "CedarvilleCursive"
     },
     appTitleTextLight: {
         color: "black",
-        fontSize: RFValue(28)
+        fontSize: RFValue(28),
+        fontFamily: "CedarvilleCursive"
     },
     fieldsContainer: {
         flex: 0.85
@@ -239,11 +259,12 @@ const styles = StyleSheet.create({
         borderWidth: RFValue(1),
         borderRadius: RFValue(10),
         paddingLeft: RFValue(10),
-        color: "white"
+        color: "white",
+        fontFamily: "CedarvilleCursive"
     },
     submitButton: {
         marginTop: RFValue(20),
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "orange",
+        alignItems: "center"
     }
 });
