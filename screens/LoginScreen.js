@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -15,18 +15,23 @@ import "firebase/database";
 import * as AuthSession from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
+import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-
-import {
-  useFonts,
-  CedarvilleCursive_400Regular as CedarvilleCursive
-} from "@expo-google-fonts/cedarville-cursive";
 
 import Constants from "expo-constants";
 
+const fontsToLoad = {
+  "CedarvilleCursive": require("../assets/fonts/CedarvilleCursive-Regular.ttf")
+}
+
 export default function LoginScreen() {
-  let [fontsLoaded] = useFonts({ CedarvilleCursive });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   let extraAppValues = Constants.manifest.extra;
+
+  useEffect(() => {
+    await Font.loadAsync(fontsToLoad);
+    setFontsLoaded(true);
+  }, [])
 
   if (Platform.OS === "android") {
     useEffect(() => {
@@ -70,7 +75,7 @@ export default function LoginScreen() {
 
 
   if (!fontsLoaded) {
-    return <AppLoading />
+    return <AppLoading />;
   }
 
   return (
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: RFValue(30),
     backgroundColor: "red",
-    marginBottom:  (Platform.OS === "android" || Platform.OS === "ios") ? RFValue(60) : null
+    marginBottom: (Platform.OS === "android" || Platform.OS === "ios") ? RFValue(60) : null
   },
   signInText: {
     color: "white",

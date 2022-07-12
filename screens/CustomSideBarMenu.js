@@ -28,7 +28,6 @@ export default class CustomSideBarMenu extends React.Component {
     }
 
     render() {
-        let props = this.props;
         return (
             <View
                 style={{

@@ -11,7 +11,6 @@
     "build:android": "eas build -p android --profile test"
   },
   "dependencies": {
-    "@expo-google-fonts/cedarville-cursive": "^0.2.2",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/drawer": "^6.3.1",
@@ -24,6 +23,7 @@
     "expo-application": "~4.0.1",
     "expo-auth-session": "~3.5.0",
     "expo-cli": "^5.4.12",
+    "expo-constants": "~13.0.1",
     "expo-random": "~12.1.1",
     "expo-speech": "~10.1.1",
     "expo-status-bar": "~1.2.0",
@@ -40,8 +40,7 @@
     "react-native-screens": "~3.10.1",
     "react-native-vector-icons": "*",
     "react-native-web": "0.17.1",
-    "react-navigation": "^4.4.4",
-    "expo-constants": "~13.0.1"
+    "react-navigation": "^4.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
