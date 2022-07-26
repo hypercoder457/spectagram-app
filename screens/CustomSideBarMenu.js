@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, View, StyleSheet, Image, Platform, StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import firebase from "firebase";
@@ -8,44 +8,37 @@ import {
     DrawerItemList
 } from "@react-navigation/drawer";
 
-export default class CustomSideBarMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            lightTheme: true
-        };
-    }
+export default function CustomSideBarMenu(props) {
+    const [lightTheme, setLightTheme] = useState(true);
 
-    componentDidMount() {
+    useEffect(() => {
         let theme;
         firebase
             .database()
             .ref(`/users/${firebase.auth().currentUser.uid}/current_theme`)
             .on("value", data => {
                 theme = data.val();
-                this.setState({ lightTheme: theme === "light" ? true : false });
+                setLightTheme(theme === "light");
             });
-    }
+    }, []);
 
-    render() {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    backgroundColor: this.state.lightTheme ? "white" : "#15193c"
-                }}
-            >
-                <SafeAreaView style={styles.droidSafeArea} />
-                <Image
-                    source={require("../assets/logo.png")}
-                    style={styles.sideMenuProfileIcon}
-                ></Image>
-                <DrawerContentScrollView {...this.props}>
-                    <DrawerItemList {...this.props} />
-                </DrawerContentScrollView>
-            </View>
-        );
-    }
+    return (
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: lightTheme ? "white" : "#15193c"
+            }}
+        >
+            <SafeAreaView style={styles.droidSafeArea} />
+            <Image
+                source={require("../assets/logo.png")}
+                style={styles.sideMenuProfileIcon}
+            ></Image>
+            <DrawerContentScrollView {...props}>
+                <DrawerItemList {...props} />
+            </DrawerContentScrollView>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
