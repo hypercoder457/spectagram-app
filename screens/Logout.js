@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Alert, Platform } from "react-native";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -7,7 +7,8 @@ import { withNavigation } from "react-navigation";
 
 function Logout(props) {
     useEffect(() => {
-        if (Platform.OS === "ios" || Platform.OS === "android") {
+        if (Platform.OS === "ios" ||
+            Platform.OS === "android") {
             Alert.alert(
                 "Logging out",
                 "Are you sure you want to log out?",
@@ -18,7 +19,7 @@ function Logout(props) {
                     },
                     {
                         text: "Cancel",
-                        onPress: () => props.navigation.goBack(),
+                        onPress: () => props.navigation.navigate("HomeScreen"),
                         style: "cancel"
                     }
                 ]

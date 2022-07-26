@@ -22,7 +22,6 @@ import "firebase/database";
 
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { color } from "react-native-reanimated";
 
 let fontsToLoad = {
     "CedarvilleCursive": require("../assets/fonts/CedarvilleCursive-Regular.ttf")

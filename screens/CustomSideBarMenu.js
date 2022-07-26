@@ -40,8 +40,8 @@ export default class CustomSideBarMenu extends React.Component {
                     source={require("../assets/logo.png")}
                     style={styles.sideMenuProfileIcon}
                 ></Image>
-                <DrawerContentScrollView {...props}>
-                    <DrawerItemList {...props} />
+                <DrawerContentScrollView {...this.props}>
+                    <DrawerItemList {...this.props} />
                 </DrawerContentScrollView>
             </View>
         );

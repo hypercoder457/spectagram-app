@@ -28,7 +28,7 @@ export default function LoginScreen() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   let extraAppValues = Constants.manifest.extra;
 
-  useEffect(() => {
+  useEffect(async () => {
     await Font.loadAsync(fontsToLoad);
     setFontsLoaded(true);
   }, [])

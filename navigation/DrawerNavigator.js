@@ -30,8 +30,9 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
       screenOptions={{
         activeTintColor: "blue",
-        inactiveTintColor: lightTheme ? "black" : "white",
-        itemStyle: { marginVertical: 5 }
+        inactiveTintColor: lightTheme ? "red" : "white",
+        itemStyle: { marginVertical: 5 },
+        drawerInactiveTintColor: "gray"
       }}
       drawerContent={props => <CustomSideBarMenu {...props} />}
     >
